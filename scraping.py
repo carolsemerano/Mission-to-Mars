@@ -18,7 +18,8 @@ def scrape_all():
         "news_paragraph": news_paragraph,
         "featured_image": featured_image(browser),
         "facts": mars_facts(),
-        "last_modified": dt.datetime.now()
+        "last_modified": dt.datetime.now(),
+        "hemispheres": hemisphere(browser)
     }
 
     # Stop webdriver and return data
@@ -97,6 +98,44 @@ def mars_facts():
 
     # Convert dataframe into HTML format, add bootstrap
     return df.to_html()
+
+def hemisphere(browser):
+    # 1. Use browser to visit the URL 
+    url = 'https://marshemispheres.com/'
+    browser.visit(url)
+
+    # 2. Create a list to hold the images and titles.
+    hemisphere_image_urls = []
+
+    # 3. Write code to retrieve the image urls and titles for each hemisphere.
+    html = browser.html
+    mars_img_soup = soup(html, 'html.parser')
+
+    # Loop through hemispheres
+    for item in mars_img_soup.find_all('div',class_='item'):
+        hemisphere_url = item.find('a',class_='itemLink product-item').get('href')
+
+        hemisphere = {}
+        
+        try:
+            browser.visit(f'{url}{hemisphere_url}')
+            html = browser.html
+            hemisphere_img_soup = soup(html, 'html.parser')
+            
+            # Capture title
+            title = hemisphere_img_soup.find('h2', class_='title').get_text()
+
+            # Capture image url
+            image_url = hemisphere_img_soup.find('div', class_='downloads')
+            image_url = image_url.find('li')
+            image_url = image_url.find('a').get('href')
+            
+            hemisphere = {'image_url': f'{url}{image_url}', 'title': title}
+            hemisphere_image_urls.append(hemisphere)
+            
+        except:
+            print('Error')   
+    return hemisphere_image_urls
 
 if __name__ == "__main__":
     # If running as script, print scraped data
