@@ -12,13 +12,13 @@ Information was scraped from various websites:
 
 ## Results
 
-- Visualisation on computer browser
+- Visualisation on the computer browser
 
     ![ScreenShot_PC1](Resources/Screenshot_PC1.png)
 
     ![ScreenShot_PC2](Resources/Screenshot_PC2.png)
 
-- Visualisation on mobile device
+- Visualisation on a mobile device
 
     ![ScreenShot_Mobile1](Resources/ScreenShot_Mobile1.png)
     ![ScreenShot_Mobile2](Resources/ScreenShot_Mobile2.png)
